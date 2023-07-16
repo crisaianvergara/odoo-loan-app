@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo>
+    <record id="loan_plan_action" model="ir.actions.act_window">
+        <field name="name">Loan Plans</field>
+        <field name="res_model">loan.plan</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="loan_plan_menu_action" name="Loan Plans"
+        parent="loan_app_settings_menu" action="loan_plan_action" />
+
+</odoo>
