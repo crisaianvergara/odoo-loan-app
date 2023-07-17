@@ -6,5 +6,6 @@ class LoanType(models.Model):
     _description = "Loan Type"
 
 
-    name = fields.Char("Type")
+    # Fields
+    name = fields.Char("Type", required = True)
     description = fields.Char("Description")

@@ -6,5 +6,6 @@ class LoanPlan(models.Model):
     _description = "Loan Plan"
 
 
-    name = fields.Char("Plan")
-    interest = fields.Float("Interest (%)")
+    # Fields
+    name = fields.Char("Plan", required = True)
+    interest = fields.Float("Interest (%)", required = True)
