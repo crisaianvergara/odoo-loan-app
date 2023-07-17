@@ -44,7 +44,7 @@ class LoanBorrower(models.Model):
 
     @api.depends('birth_date')
     def _compute_age(self):
-        """Compute age"""
+        """Compute age."""
         for rec in self:
             if rec.birth_date:
                 age = (date.today() - rec.birth_date) // timedelta(days=365.2425)
@@ -59,7 +59,7 @@ class LoanBorrower(models.Model):
     # Python Constraints
     @api.constrains('mobile')
     def _validate_mobile(self):
-        """Validate mobile"""
+        """Validate mobile."""
         if self.mobile:
             match = re.match(
                 "((^(\+)(\d){12}$)|(^\d{11}$))",
@@ -71,7 +71,7 @@ class LoanBorrower(models.Model):
 
     @api.constrains('email')
     def _validate_email(self):
-        """Validate email address"""
+        """Validate email address."""
         try:
             if self.email:
                 match = re.match(
@@ -82,3 +82,11 @@ class LoanBorrower(models.Model):
                 raise ValidationError('Please enter a valid email address!')
         except UnboundLocalError:
             print("UnboundLocalError triggered!")
+
+    
+    @api.constrains("function")
+    def _validate_function(self):
+        """Validate function."""
+        for rec in self:
+            if len(rec.function) < 3:
+                raise ValidationError("Job Position must be greater than 3 characters.")

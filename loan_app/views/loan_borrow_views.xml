@@ -13,8 +13,8 @@
                     <group>
                         <group>
                             <field name="loan_amount" />
-                            <field name="loan_plan" />
-                            <field name="loan_type" />
+                            <field name="loan_plan_id" />
+                            <field name="loan_type_id" />
                             <field name="active" />
                         </group>
                     </group>
@@ -26,7 +26,7 @@
                                 <field name="amount_to_receive" />
                                 <field name="interest_rate" />
                                 <field name="term" />
-                                <field name="amount_due" />
+                                <field name="monthly_amount_due" />
                             </group>
                         </page>
                         <page string="Monthly">
@@ -46,8 +46,8 @@
         <field name="arch" type="xml">
             <tree string="Borrows">
                 <field name="borrower_id" />
-                <field name="loan_plan" />
-                <field name="loan_type" />
+                <field name="loan_plan_id" />
+                <field name="loan_type_id" />
                 <field name="loan_amount" />
             </tree>
         </field>
