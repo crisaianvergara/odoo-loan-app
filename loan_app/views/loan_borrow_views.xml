@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo>
+    <record id="loan_borrow_view_form" model="ir.ui.view">
+        <field name="name">loan.borrow.view.form</field>
+        <field name="model">loan.borrow</field>
+        <field name="arch" type="xml">
+            <form string="Loan Borrow">
+                <sheet>
+                    <h1> 
+                        <field name="borrower_id" />
+                    </h1>
+                    <group>
+                        <group>
+                            <field name="loan_amount" />
+                            <field name="loan_plan" />
+                            <field name="loan_type" />
+                            <field name="active" />
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Summary">
+                            <group>
+                                <field name="loan_amount_summary" />
+                                <field name="processing_fee" />
+                                <field name="amount_to_receive" />
+                                <field name="interest_rate" />
+                                <field name="term" />
+                                <field name="amount_due" />
+                            </group>
+                        </page>
+                        <page string="Monthly">
+                        </page>
+                        <page string="Other Info">
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Tree -->
+    <record id="loan_borrow_view_tree" model="ir.ui.view">
+        <field name="name">loan.borrow.view.tree</field>
+        <field name="model">loan.borrow</field>
+        <field name="arch" type="xml">
+            <tree string="Borrows">
+                <field name="borrower_id" />
+                <field name="loan_plan" />
+                <field name="loan_type" />
+                <field name="loan_amount" />
+            </tree>
+        </field>
+    </record>
+</odoo>

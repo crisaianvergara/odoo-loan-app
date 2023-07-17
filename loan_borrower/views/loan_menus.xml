@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo>
+    <!-- Loan Borrower Action -->
+    <record id="loan_borrower_action" model="ir.actions.act_window">
+        <field name="name">Borrowers</field>
+        <field name="res_model">loan.borrower</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Loan Borrower Menu -->
+    <menuitem id="loan_borrower_menu_action" name="Borrowers" sequence="-100"
+        parent="loan_app.loan_app_setting_menu" action="loan_borrower_action" />
+</odoo>

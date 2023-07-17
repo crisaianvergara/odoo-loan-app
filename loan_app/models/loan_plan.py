@@ -7,5 +7,5 @@ class LoanPlan(models.Model):
 
 
     # Fields
-    name = fields.Char("Plan", required = True)
-    interest = fields.Float("Interest (%)", required = True)
+    name = fields.Char("Plan (months)", required=True)
+    interest = fields.Float("Interest (%)", required=True)

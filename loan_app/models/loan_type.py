@@ -7,5 +7,4 @@ class LoanType(models.Model):
 
 
     # Fields
-    name = fields.Char("Type", required = True)
-    description = fields.Char("Description")
+    name = fields.Char("Type", required=True)
