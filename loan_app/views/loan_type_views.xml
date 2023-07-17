@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo>
+    <!-- Tree -->
+    <record id="loan_type_view_tree" model="ir.ui.view">
+        <field name="name">loan.type.view.tree</field>
+        <field name="model">loan.type</field>
+        <field name="arch" type="xml">
+            <tree string="Loan Types" editable="bottom">
+                <field name="name" />
+            </tree>
+        </field>
+    </record>
+</odoo>

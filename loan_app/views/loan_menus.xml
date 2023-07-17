@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo>
+    <!-- Root Menu -->
+    <menuitem id="loan_app_menu_root" name="Loan" 
+        web_icon="loan_app,static/description/icon.png" sequence="-100" />
+
+    <!-- Settings Menu -->
+    <menuitem id="loan_app_setting_menu" name="Settings" 
+        parent="loan_app_menu_root" sequence="-100" />
+
+    <!-- Loan Borrow Action -->
+    <record id="loan_borrow_action" model="ir.actions.act_window">
+        <field name="name">Borrows</field>
+        <field name="res_model">loan.borrow</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Loan Borrow Menu -->
+    <menuitem id="loan_borrow_menu_action" name="Borrows" sequence="-101" 
+        parent="loan_app_menu_root" action="loan_borrow_action" />
+
+    <!-- Loan Plan Action -->
+    <record id="loan_plan_action" model="ir.actions.act_window">
+        <field name="name">Loan Plans</field>
+        <field name="res_model">loan.plan</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Loan Plan Menu -->
+    <menuitem id="loan_plan_menu_action" name="Loan Plans" sequence="-99"
+        parent="loan_app_setting_menu" action="loan_plan_action" />
+
+    <!-- Loan Type Action -->
+    <record id="loan_type_action" model="ir.actions.act_window">
+        <field name="name">Loan Types</field>
+        <field name="res_model">loan.type</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Loan Type Menu -->
+    <menuitem id="loan_type_menu_action" name="Loan Types" sequence="-98"
+        parent="loan_app_setting_menu" action="loan_type_action" />
+</odoo>
