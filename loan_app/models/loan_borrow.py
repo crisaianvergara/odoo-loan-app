@@ -1,6 +1,11 @@
 from odoo import api, fields, models
 
+from odoo.exceptions import ValidationError
+
+# Constant Variables
 PROCESSING_FEE = 3
+LOAN_AMOUNT_MIN = 5000
+LOAN_AMOUNT_MAX = 20000
 
 
 class LoanBorrows(models.Model):
@@ -23,8 +28,34 @@ class LoanBorrows(models.Model):
     term = fields.Char("Term", compute="_compute_term")
     monthly_amount_due = fields.Float("Monthly Amount Due", compute="_compute_monthly_amount_due")
 
+    # State
+    state = fields.Selection(
+        string="Status",
+        copy=False,
+        default="draft",
+        required=True,
+        selection=[
+            ("draft", "Draft"),
+            ("submitted", "Submitted"),
+            ("approved", "Approved"),
+            ("canceled", "Canceled"),
+        ],
+    )
+
+    related_loan_ids = fields.One2many("loan.borrow", "borrower_id", string="Related Loans", compute="_compute_related_loans") # Review this field
+
 
     # Computed Fields
+    @api.depends("borrower_id")
+    def _compute_related_loans(self): # Review this function
+        """Compute related loans for the borrower."""
+        for rec in self:
+            related_loans = self.search(
+                [("borrower_id", "=", rec.borrower_id.id), ("id", "!=", rec.id), ("state", "in", ["draft", "submitted", "approved"])]
+            )
+            rec.related_loan_ids = related_loans
+
+
     @api.depends("loan_amount")
     def _compute_loan_amount_summary(self):
         """Compute loan amount."""
@@ -68,3 +99,38 @@ class LoanBorrows(models.Model):
             else: 
                 rec.monthly_amount_due = 0
 
+
+    # Python Constraints
+    @api.constrains("loan_amount")
+    def _validate_loan_amount(self):
+        for rec in self:
+            if not LOAN_AMOUNT_MIN <= rec.loan_amount <= LOAN_AMOUNT_MAX:
+                raise ValidationError(f"Amount must be in between {LOAN_AMOUNT_MIN} to {LOAN_AMOUNT_MAX}.")
+    
+
+    @api.constrains("state")
+    def _validate_related_loans(self): # Review this function
+        """Validate related loan."""
+        for rec in self:
+            if rec.related_loan_ids and rec.state not in ["canceled"]:
+                raise ValidationError("The borrower already has an active loan.")
+
+
+    # Actions
+    def action_submit(self):
+        """Submit borrow."""
+        if "canceled" in self.mapped("state"):
+            raise ValidationError("Canceled borrows cannot be submit.")
+        return self.write({"state": "submitted"})
+    
+
+    def action_approve(self):
+        """Approved borrow."""
+        return self.write({"state": "approved"})
+
+    
+    def action_cancel(self):
+        """Cancel borrow."""
+        if "approved" in self.mapped("state"):
+            raise ValidationError("Approved borrows cannot be cancel.")
+        return self.write({"state": "canceled"})
