@@ -2,3 +2,4 @@ id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_loan_type,access.loan.type,loan_app.model_loan_type,base.group_user,1,1,1,1
 access_loan_plan,access.loan.plan,loan_app.model_loan_plan,base.group_user,1,1,1,1
 access_loan_borrow,access.loan.borrow,loan_app.model_loan_borrow,base.group_user,1,1,1,1
+access_loan_payment,access.loan.payment,loan_app.model_loan_payment,base.group_user,1,1,1,1
