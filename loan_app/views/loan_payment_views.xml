@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo>
+    <!-- Tree -->
+    <record id="loan_payment_view_tree" model="ir.ui.view">
+        <field name="name">loan.payment.view.tree</field>
+        <field name="model">loan.payment</field>
+        <field name="arch" type="xml">
+            <tree create="false" editable="bottom" delete="false"
+                decoration-success="state == 'paid'"
+                decoration-info="state == 'unpaid'">
+                <field name="loan_borrow_id" readonly="1" />
+                <field name="payment_date" readonly="1" />
+                <field name="amount_due" readonly="1" />
+                <field name="state" readonly="1" />
+                <field name="show_pay_button" invisible="1" /> 
+                <field name="paid_date" readonly="1" /> 
+                <button name="action_pay" type="object" string="Pay Now"
+                    attrs="{'invisible': [('show_pay_button', '=', False)]}" />
+            </tree>
+        </field>
+    </record>
+
+    <!-- Loan Payment Action -->
+    <record id="loan_payment_action" model="ir.actions.act_window">
+        <field name="name">Payments</field>
+        <field name="res_model">loan.payment</field>
+        <field name="view_mode">tree</field>
+    </record>
+</odoo>

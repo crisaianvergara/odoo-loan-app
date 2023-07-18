@@ -13,6 +13,7 @@
         "views/loan_type_views.xml",
         "views/loan_plan_views.xml",
         "views/loan_borrow_views.xml",
+        "views/loan_payment_views.xml",
     ],
     "demo": [],
     "sequence": -100,
