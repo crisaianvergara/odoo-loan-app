@@ -13,9 +13,9 @@
                     <button name="action_approve" type="object" 
                         string="Approve" states="submitted" />
                     <button name="action_cancel" type="object" 
-                        string="Cancel" states="draft,submitted" />
+                        string="Cancel" states="submitted" />
                     <field name="state" widget="statusbar" 
-                        statusbar_visible="draft,submitted,approved,canceled" />
+                        statusbar_visible="draft,submitted,approved,closed,canceled" />
                 </header>
                 <sheet>
                     <h1> 
@@ -44,17 +44,14 @@
                                 <field name="amount_due" />
                             </group>
                         </page>
-                        <page string="Installments" attrs="{'invisible': [('state', '!=', 'approved')]}">
-                            <field name="loan_payment_ids">
-                                <tree create="false" editable="bottom" delete="false">
-                                    <field name="loan_borrow_id" readonly="1" />
-                                    <field name="payment_date" readonly="1" />
-                                    <field name="amount_due" readonly="1" />
-                                    <field name="state" readonly="1" />
-                                </tree>
-                            </field>
+                        <page string="Installments" attrs="{'invisible': [('state', 'not in', ['approved', 'closed'])]}">
+                            <field name="loan_payment_ids" />
                         </page>
                         <page string="Other Info">
+                            <group>
+                                <field name="partner_id" />
+                                <field name="user_id" />
+                            </group>
                         </page>
                     </notebook>
                 </sheet>
@@ -68,7 +65,8 @@
         <field name="model">loan.borrow</field>
         <field name="arch" type="xml">
             <tree string="Borrows" decoration-success="state == 'approved'"
-                decoration-info="state == 'submitted'" decoration-danger="state == 'canceled'">
+                decoration-info="state == 'submitted'" decoration-danger="state == 'canceled'"
+                decoration-warning="state == 'draft'">
                 <field name="borrower_id" />
                 <field name="loan_plan_id" />
                 <field name="loan_type_id" />
@@ -89,7 +87,8 @@
                 <field name="loan_type_id" />
                 <field name="loan_amount" />
                 <searchpanel>
-                    <field name="state" icon="fa-users" enable_counters="1" select="multi" />
+                    <field name="state" icon="fa-users" 
+                        enable_counters="1" select="multi" />
                 </searchpanel>
             </search>
         </field>

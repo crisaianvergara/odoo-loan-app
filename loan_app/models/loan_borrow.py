@@ -25,7 +25,7 @@ class LoanBorrow(models.Model):
     _rec_name = "borrower_id"
 
     # Fields
-    borrower_id = fields.Many2one("loan.borrower", string="Borrower", required=True)
+    borrower_id = fields.Many2one("loan.borrower", string="Name", required=True)
     loan_plan_id = fields.Many2one("loan.plan", string="Plan (months)", required=True)
     loan_type_id = fields.Many2one("loan.type", string="Type", required=True)
     loan_amount = fields.Float("Amount", required=True, default=LOAN_AMOUNT_MIN)
@@ -49,6 +49,7 @@ class LoanBorrow(models.Model):
             ("draft", "Draft"),
             ("submitted", "Submitted"),
             ("approved", "Approved"),
+            ("closed", "Closed"),
             ("canceled", "Canceled"),
         ],
     )
@@ -59,6 +60,14 @@ class LoanBorrow(models.Model):
         compute="_compute_related_loans"
     ) # Review this field
     loan_payment_ids = fields.One2many("loan.payment", "loan_borrow_id", string="Loan Payments")
+
+    # Other Info
+    user_id = fields.Many2one(
+        "res.users", string="Lender",
+        default=lambda self: self.env.user,
+        readonly=True,
+    )
+    partner_id = fields.Char("Borrower", related="borrower_id.name")
 
 
     # Computed Fields
