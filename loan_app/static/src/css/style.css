@@ -1,0 +1,21 @@
+p {
+    margin-bottom: 0;
+}
+
+small {
+    background-color: #0DCAF0;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: bold;
+    margin-left: 1rem;
+    padding: 4px 6px;
+}
+
+.heading-three {
+    background-color: #0D6EFD;
+    padding: 10px;
+}
+
+.summary, .heading-four {
+    padding-left: 1rem;
+}
