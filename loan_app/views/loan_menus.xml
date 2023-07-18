@@ -4,11 +4,7 @@
     <!-- Root Menu -->
     <menuitem id="loan_app_menu_root" name="Loan" 
         web_icon="loan_app,static/description/icon.png" sequence="-100" />
-
-    <!-- Settings Menu -->
-    <menuitem id="loan_app_setting_menu" name="Settings" 
-        parent="loan_app_menu_root" sequence="-100" />
-
+    
     <!-- Loan Borrow Action -->
     <record id="loan_borrow_action" model="ir.actions.act_window">
         <field name="name">Borrows</field>
@@ -19,6 +15,10 @@
     <!-- Loan Borrow Menu -->
     <menuitem id="loan_borrow_menu_action" name="Borrows" sequence="-101" 
         parent="loan_app_menu_root" action="loan_borrow_action" />
+
+    <!-- Settings Menu -->
+    <menuitem id="loan_app_setting_menu" name="Settings" 
+        parent="loan_app_menu_root" sequence="-100" />
 
     <!-- Loan Plan Action -->
     <record id="loan_plan_action" model="ir.actions.act_window">

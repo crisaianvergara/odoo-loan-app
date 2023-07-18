@@ -1,3 +1,6 @@
+from datetime import datetime
+from dateutil.relativedelta import relativedelta
+
 from odoo import api, fields, models
 
 from odoo.exceptions import ValidationError
@@ -8,16 +11,24 @@ LOAN_AMOUNT_MIN = 5000
 LOAN_AMOUNT_MAX = 20000
 
 
-class LoanBorrows(models.Model):
+# Functions
+def get_amount_due(rec):
+    interest_value = rec.loan_amount * (rec.loan_plan_id.interest  / 100)
+    total_interest_in_all_months = interest_value * int(rec.loan_plan_id.name)
+    total_amount_to_pay = total_interest_in_all_months + rec.loan_amount
+    return total_amount_to_pay / int(rec.loan_plan_id.name)
+
+
+class LoanBorrow(models.Model):
     _name = "loan.borrow"
     _description = "Loan Borrow"
     _rec_name = "borrower_id"
 
     # Fields
-    borrower_id = fields.Many2one("loan.borrower", string="Borrower", required=True)
+    borrower_id = fields.Many2one("loan.borrower", string="Name", required=True)
     loan_plan_id = fields.Many2one("loan.plan", string="Plan (months)", required=True)
     loan_type_id = fields.Many2one("loan.type", string="Type", required=True)
-    loan_amount = fields.Float("Amount", required=True)
+    loan_amount = fields.Float("Amount", required=True, default=LOAN_AMOUNT_MIN)
     active = fields.Boolean("Active?", default=True)
 
     # Summary
@@ -26,7 +37,7 @@ class LoanBorrows(models.Model):
     amount_to_receive = fields.Float("Amount to Receive", compute="_compute_amount_to_receive")
     interest_rate = fields.Float("Interest Rate (%)", related="loan_plan_id.interest")
     term = fields.Char("Term", compute="_compute_term")
-    monthly_amount_due = fields.Float("Monthly Amount Due", compute="_compute_monthly_amount_due")
+    amount_due = fields.Float("Amount Due", compute="_compute_amount_due")
 
     # State
     state = fields.Selection(
@@ -38,11 +49,25 @@ class LoanBorrows(models.Model):
             ("draft", "Draft"),
             ("submitted", "Submitted"),
             ("approved", "Approved"),
+            ("closed", "Closed"),
             ("canceled", "Canceled"),
         ],
     )
 
-    related_loan_ids = fields.One2many("loan.borrow", "borrower_id", string="Related Loans", compute="_compute_related_loans") # Review this field
+    related_loan_ids = fields.One2many(
+        "loan.borrow", "borrower_id",
+        string="Related Loans",
+        compute="_compute_related_loans"
+    ) # Review this field
+    loan_payment_ids = fields.One2many("loan.payment", "loan_borrow_id", string="Loan Payments")
+
+    # Other Info
+    user_id = fields.Many2one(
+        "res.users", string="Lender",
+        default=lambda self: self.env.user,
+        readonly=True,
+    )
+    partner_id = fields.Char("Borrower", related="borrower_id.name")
 
 
     # Computed Fields
@@ -51,7 +76,11 @@ class LoanBorrows(models.Model):
         """Compute related loans for the borrower."""
         for rec in self:
             related_loans = self.search(
-                [("borrower_id", "=", rec.borrower_id.id), ("id", "!=", rec.id), ("state", "in", ["draft", "submitted", "approved"])]
+                [
+                    ("borrower_id", "=", rec.borrower_id.id),
+                    ("id", "!=", rec.id),
+                    ("state", "in", ["draft", "submitted", "approved"])
+                ]
             )
             rec.related_loan_ids = related_loans
 
@@ -88,16 +117,14 @@ class LoanBorrows(models.Model):
     
 
     @api.depends("loan_amount", "loan_plan_id")
-    def _compute_monthly_amount_due(self):
-        """Compute monthly amount due."""
+    def _compute_amount_due(self):
+        """Compute amount due."""
         for rec in self:
             if rec.loan_amount > 0 and rec.loan_plan_id:
-                interest_value = rec.loan_amount * (rec.loan_plan_id.interest  / 100)
-                total_interest_in_all_months = interest_value * int(rec.loan_plan_id.name)
-                total_amount_to_pay = total_interest_in_all_months + rec.loan_amount
-                rec.monthly_amount_due = total_amount_to_pay / int(rec.loan_plan_id.name)
+                # Get amount due
+                rec.amount_due = get_amount_due(rec)
             else: 
-                rec.monthly_amount_due = 0
+                rec.amount_due = 0
 
 
     # Python Constraints
@@ -126,7 +153,20 @@ class LoanBorrows(models.Model):
 
     def action_approve(self):
         """Approved borrow."""
-        return self.write({"state": "approved"})
+        for rec in self:
+            rec.write({"state": "approved"})
+            # Get amount due
+            amount_due = get_amount_due(rec)
+            payment_date = datetime.today().date()
+            for _ in range(int(rec.loan_plan_id.name)):
+                payment_date += relativedelta(months=1)
+                rec.loan_payment_ids.create(
+                    {
+                        "loan_borrow_id": rec.id,
+                        "payment_date": payment_date,
+                        "amount_due": amount_due,
+                    }
+                )
 
     
     def action_cancel(self):
