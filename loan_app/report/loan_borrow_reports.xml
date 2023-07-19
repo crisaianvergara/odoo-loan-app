@@ -31,7 +31,9 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- Check loan_payment_ids: True do this else False skip -->
                         <t t-if="o.loan_payment_ids">
+                            <h4 class="heading-four">Installments</h4>
                             <div class="row mb-5 p-2">
                                 <table class="table">
                                     <thead>
