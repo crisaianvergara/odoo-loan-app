@@ -7,17 +7,17 @@
     
     <!-- Loan Borrow Action -->
     <record id="loan_borrow_action" model="ir.actions.act_window">
-        <field name="name">Borrows</field>
+        <field name="name">Loan Details</field>
         <field name="res_model">loan.borrow</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">tree,form,kanban</field>
     </record>
 
     <!-- Loan Borrow Menu -->
-    <menuitem id="loan_borrow_menu_action" name="Borrows" sequence="-101" 
+    <menuitem id="loan_borrow_menu_action" name="Loan Details" sequence="-102" 
         parent="loan_app_menu_root" action="loan_borrow_action" />
 
     <!-- Settings Menu -->
-    <menuitem id="loan_app_setting_menu" name="Settings" 
+    <menuitem id="loan_app_setting_menu" name="Configurations" 
         parent="loan_app_menu_root" sequence="-100" />
 
     <!-- Loan Plan Action -->

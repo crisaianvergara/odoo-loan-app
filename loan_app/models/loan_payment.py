@@ -24,23 +24,25 @@ class LoanPayment(models.Model):
             ("paid", "Paid"),
         ],
     )
+    # Connected tp pay Button: Review this code
     show_pay_button = fields.Boolean(
         "Show Pay Button",
         compute="_compute_show_pay_button"
     )
-    
     # New field to store the nearest unpaid payment date
     next_payment_date = fields.Date("Next Payment Date", compute="_compute_next_payment_date")
 
     # Computed Fields
     @api.depends("payment_date", "state")
     def _compute_show_pay_button(self):
+        """Only show the pay button on the next payment date."""
         today = date.today()
         for rec in self:
             rec.show_pay_button = (
                 rec.state == 'unpaid' and rec.payment_date == rec.next_payment_date
             )
     
+    # Review this code
     @api.depends('loan_borrow_id.loan_payment_ids')
     def _compute_next_payment_date(self):
         """Computed field to calculate the next unpaid payment date."""
@@ -53,9 +55,10 @@ class LoanPayment(models.Model):
             else:
                 rec.next_payment_date = False
 
+
     # Actions
     def action_pay(self):
-        """Action pay."""
+        """Pay loan amount due."""
         paid_date = date.today()
         self.write({"state": "paid", "paid_date": paid_date})
 
