@@ -8,18 +8,19 @@
         <field name="arch" type="xml">
             <form string="Loan Borrower">
                 <sheet>
-                    <h1>
-                        <field name="name" />
-                    </h1>
+                    <h1>Member Form</h1>
+                    <br />
                     <group>
                         <group>
+                            <field name="name"
+                                placeholder="First Name, MI, Last Name" />
                             <field name="birth_date" />
                             <field name="age" />
                             <field name="gender" />
-                            <field name="address" 
-                                placeholder="Zone, Barangay, Municipality, Province" />
                         </group>
                         <group>
+                            <field name="address" 
+                                placeholder="Zone, Barangay, Municipality, Province" />
                             <field name="mobile" />
                             <field name="email" />
                             <field name="function" string="Job Position" />

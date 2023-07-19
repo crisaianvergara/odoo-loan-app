@@ -6,7 +6,6 @@ from odoo.exceptions import ValidationError
 class LoanPlan(models.Model):
     _name = "loan.plan"
     _description = "Loan Plan"
-    _order = 'name'
 
     # SQL Constraints
     _sql_constraints = [
