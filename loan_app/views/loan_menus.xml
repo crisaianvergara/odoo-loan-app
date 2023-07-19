@@ -17,7 +17,7 @@
         parent="loan_app_menu_root" action="loan_borrow_action" />
 
     <!-- Settings Menu -->
-    <menuitem id="loan_app_setting_menu" name="Configurations" 
+    <menuitem id="loan_app_setting_menu" name="Configuration" 
         parent="loan_app_menu_root" sequence="-100" />
 
     <!-- Loan Plan Action -->
