@@ -9,6 +9,9 @@ from odoo.exceptions import ValidationError
 class LoanBorrower(models.Model):
     _name = "loan.borrower"
     _description = "Loan Borrower"
+    
+    # Inheritance
+    _inherit = ["mail.thread", "mail.activity.mixin"]
 
     # Delegation Inheritance
     _inherits = { "res.partner": "partner_id"}

@@ -18,19 +18,18 @@
                         statusbar_visible="draft,submitted,approved,closed,canceled" />
                 </header>
                 <sheet>
-                    <h1> 
-                        <field name="borrower_id" 
-                            options="{'no_create': True, 'no_edit': True}" />
-                    </h1>
+                    <h1>Loan Application</h1>
+                    <br />
                     <group>
                         <group>
+                            <field name="borrower_id" 
+                                options="{'no_create': True, 'no_edit': True}" />
                             <field name="loan_amount" 
                                 options="{'no_create': True, 'no_edit': True}" />
                             <field name="loan_plan_id" 
                                 options="{'no_create': True, 'no_edit': True}" />
                             <field name="loan_type_id" 
                                 options="{'no_create': True, 'no_edit': True}" />
-                            <field name="active" />
                         </group>
                     </group>
                     <notebook>
@@ -55,6 +54,12 @@
                         </page>
                     </notebook>
                 </sheet>
+                <!-- Chatter -->
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" groups="base.group_user" />
+                    <field name="activity_ids" />
+                    <field name="message_ids" />
+                </div>
             </form>
         </field>
     </record>

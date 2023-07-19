@@ -22,7 +22,11 @@ def get_amount_due(rec):
 class LoanBorrow(models.Model):
     _name = "loan.borrow"
     _description = "Loan Borrow"
+    _order = 'state'
     _rec_name = "borrower_id"
+    
+    # Inheritance
+    _inherit = ["mail.thread", "mail.activity.mixin"]
 
     # Fields
     borrower_id = fields.Many2one("loan.borrower", string="Name", required=True)
