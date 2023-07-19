@@ -9,6 +9,9 @@ from odoo.exceptions import ValidationError
 class LoanBorrower(models.Model):
     _name = "loan.borrower"
     _description = "Loan Borrower"
+    
+    # Inheritance
+    _inherit = ["mail.thread", "mail.activity.mixin"]
 
     # Delegation Inheritance
     _inherits = { "res.partner": "partner_id"}
@@ -59,7 +62,7 @@ class LoanBorrower(models.Model):
     # Python Constraints
     @api.constrains('mobile')
     def _validate_mobile(self):
-        """Validate mobile."""
+        """Validate mobile: format(09279601094/+639279601094)."""
         if self.mobile:
             match = re.match(
                 "((^(\+)(\d){12}$)|(^\d{11}$))",
@@ -71,7 +74,8 @@ class LoanBorrower(models.Model):
 
     @api.constrains('email')
     def _validate_email(self):
-        """Validate email address."""
+        """Validate email address: format(crisaianvergara@gmail.com)."""
+        # Error handling
         try:
             if self.email:
                 match = re.match(
@@ -86,7 +90,7 @@ class LoanBorrower(models.Model):
     
     @api.constrains("function")
     def _validate_function(self):
-        """Validate function."""
+        """Validate function/job position."""
         for rec in self:
             if len(rec.function) < 3:
                 raise ValidationError("Job Position must be greater than 3 characters.")

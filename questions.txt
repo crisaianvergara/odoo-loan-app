@@ -1,0 +1,31 @@
+Questions
+
+1. Is it possible to remove or modify _sql_constraints? (sample on inheriting res.partner)
+2. Some Bootstrap classes not working.
+3. Ilang days po mag ask for help kung sakaling stuck na sa task or tickets.
+4. Mga ilang projects po kayo involve.
+
+Struggles
+1. Communication Skills
+2. Lack of Confidence
+3. Technical (Javascript)
+
+Need to improve
+1. Qweb templates
+2. Inheritance
+3. CRUD
+
+Sample Data
+
+Plans
+1. 5 months - 4%
+2. 9 months - 3.59%
+3. 12 months - 3.09
+
+Types
+1. Small Business
+2. Mortgages
+3. Personal Loans
+4. Pay Bills
+5. Travel
+6. Emergency
