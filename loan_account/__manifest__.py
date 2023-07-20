@@ -4,7 +4,7 @@
     "description": "Manage invoice.",
     "author": "Cris-aian Vergara",
     "website": "https://www.crisaianvergara.com",
-    "category": "Loan",
+    "category": "Finance/Loan",
     "version": "16.0.1.0.0",
     "depends": ["loan_app", "account"],
     "data": [],
