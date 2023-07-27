@@ -6,7 +6,7 @@
         <field name="name">loan.borrow.view.form</field>
         <field name="model">loan.borrow</field>
         <field name="arch" type="xml">
-            <form string="Loan Borrow">
+            <form string="Loan Borrows">
                 <header>
                     <button class="btn-primary" name="action_submit" type="object" 
                         string="Submit" states="draft" />

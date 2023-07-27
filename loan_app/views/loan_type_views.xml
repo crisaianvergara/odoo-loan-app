@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <odoo>
+    <!-- Form -->
+    <record id="loan_type_view_form" model="ir.ui.view">
+        <field name="name">loan.type.view.form</field>
+        <field name="model">loan.type</field>
+        <field name="arch" type="xml">
+            <form string="Loan Types">
+                <sheet>
+                    <group>
+                        <field name="name" />
+                    </group>    
+                </sheet>
+            </form>
+        </field>
+    </record>
+    
     <!-- Tree -->
     <record id="loan_type_view_tree" model="ir.ui.view">
         <field name="name">loan.type.view.tree</field>
