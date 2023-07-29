@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo>
+    <!-- Template to check if user is logged in -->
+    <template id="is_user_logged_in">
+        <t t-if="user_id">
+            <t t-set="logged_in" t-value="True" />
+        </t>
+        <t t-if="not user_id">
+            <t t-set="logged_in" t-value="False" />
+        </t>
+    </template>
+
+    <record id="menu_loan_form" model="website.menu">
+        <field name="name">Loan</field>
+        <field name="url">/loan</field>
+        <field name="parent_id" ref="website.main_menu"/>
+        <field name="sequence">54</field>
+    </record>
+
+    <template id="create_loan" name="Create Loan">
+        <t t-call="website.layout">
+            <div id="wrap">
+                <div class="oe_structure">
+                    <div class="container">
+                        <div class="row mt-3 py-3">
+                            <div class="col-lg-6 mx-auto">
+                                <h3 class="mb-3">Loan Application</h3>
+                                <form role="form" action="/submit_loan" method="POST">
+                                    <input type="hidden" name="csrf_token"
+                                        t-att-value="request.csrf_token()" />
+                                    <div class="mb-3">
+                                        <label for="name" class="form-label">Name</label>
+                                        <input type="text" class="form-control" id="name" 
+                                            t-att-value="user.name" readonly="readonly" />
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="loan_amount" class="form-label">Amount</label>
+                                        <input name="loan_amount" type="number" class="form-control" id="loan_amount" />
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="loan_plan" class="form-label">Plan (months)</label>
+                                        <select name="loan_plan" class="form-select mb-3" id="loan_plan">
+                                            <option t-att-selected="True" value="">Select plan</option>
+                                            <t t-foreach="loan_plans" t-as="plan">
+                                                <option t-att-value="plan.id">
+                                                    <t t-esc="plan.name"/>
+                                                </option>
+                                            </t>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="loan_type" class="form-label">Type</label>
+                                        <select name="loan_type" class="form-select mb-3" id="loan_type">
+                                            <option t-att-selected="True" value="">Select type</option>
+                                            <t t-foreach="loan_types" t-as="type">
+                                                <option t-att-value="type.id">
+                                                    <t t-esc="type.name"/>
+                                                </option>
+                                            </t>
+                                        </select>
+                                    </div>
+                                    <h4 class="mt-5 mb-3">Summary</h4>
+                                    <div class="mb-3">
+                                        <label for="loan_amount_summary" class="form-label">Loan Amount</label>
+                                        <input type="number" class="form-control" id="loan_amount_summary" readonly="readonly" />
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="processing_fee" class="form-label">Processing Fee</label>
+                                        <input type="number" class="form-control" id="processing_fee" readonly="readonly" />
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="amount_to_receive" class="form-label">Amount to Receive</label>
+                                        <input type="number" class="form-control" id="amount_to_receive" readonly="readonly" />
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="interest_rate" class="form-label">Interest Rate (%)</label>
+                                        <input type="number" class="form-control" id="interest_rate" readonly="readonly" />
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="term" class="form-label">Term</label>
+                                        <input type="number" class="form-control" id="term" readonly="readonly" />
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="amount_due" class="form-label">Amount Due</label>
+                                        <input type="number" class="form-control" id="amount_due" readonly="readonly" />
+                                    </div>
+                                    <div class="mb-3 text-end">
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

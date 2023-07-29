@@ -1,2 +1,4 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_loan_borrower,access.loan.borrower,loan_borrower.model_loan_borrower,base.group_user,1,1,1,1
+access_loan_borrower_user,access.loan.borrower.user,loan_borrower.model_loan_borrower,loan_app.group_loan_user,1,1,1,0
+access_loan_borrower_manager,access.loan.borrower.manager,loan_borrower.model_loan_borrower,loan_app.group_loan_manager,1,1,1,1
+access_loan_borrower,access.loan.borrower,loan_borrower.model_loan_borrower,base.group_user,0,0,0,0
