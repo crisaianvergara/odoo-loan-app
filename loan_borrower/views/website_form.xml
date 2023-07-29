@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo>
+    <record id="menu_profile_form" model="website.menu">
+        <field name="name">Profile</field>
+        <field name="url">/profile</field>
+        <field name="parent_id" ref="website.main_menu"/>
+        <field name="sequence">55</field>
+    </record>
+</odoo>

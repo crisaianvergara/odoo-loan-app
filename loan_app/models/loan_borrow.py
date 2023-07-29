@@ -1,8 +1,6 @@
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
-
 from odoo import api, fields, models
-
 from odoo.exceptions import ValidationError
 
 # Constant Variables
@@ -13,6 +11,7 @@ LOAN_AMOUNT_MAX = 20000
 
 # Functions
 def get_amount_due(rec):
+    """Calculate the amount due/monthly amount to pay."""
     interest_value = rec.loan_amount * (rec.loan_plan_id.interest  / 100)
     total_interest_in_all_months = interest_value * int(rec.loan_plan_id.name)
     total_amount_to_pay = total_interest_in_all_months + rec.loan_amount
@@ -29,7 +28,7 @@ class LoanBorrow(models.Model):
     _inherit = ["mail.thread", "mail.activity.mixin"]
 
     # Fields
-    borrower_id = fields.Many2one("loan.borrower", string="Name", required=True)
+    borrower_id = fields.Many2one("res.partner", string="Name", required=True)
     loan_plan_id = fields.Many2one("loan.plan", string="Plan (months)", required=True)
     loan_type_id = fields.Many2one("loan.type", string="Type", required=True)
     loan_amount = fields.Float("Amount", required=True, default=LOAN_AMOUNT_MIN)
@@ -96,7 +95,7 @@ class LoanBorrow(models.Model):
 
     @api.depends("loan_amount")
     def _compute_loan_amount_summary(self):
-        """Compute loan amount."""
+        """Compute loan amount summary."""
         for rec in self:
             rec.loan_amount_summary = rec.loan_amount
 

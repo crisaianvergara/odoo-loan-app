@@ -1,8 +1,6 @@
 import re
 from datetime import date, timedelta
-
 from odoo import api, fields, models
-
 from odoo.exceptions import ValidationError
 
 

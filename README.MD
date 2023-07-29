@@ -45,7 +45,8 @@ odoo --version
 odoo/odoo-bin --version
 
 # Run Odoo
-python3 odoo/odoo-bin --addons-path=enterprise,odoo/addons,custom_addons -d db-project -u loan_app,loan_borrower --dev xml --xmlrpc-port=8000
+python3 odoo/odoo-bin --addons-path=enterprise,odoo/addons,custom_addons -d db-project -u loan_app,loan_borrower,loan_account --dev xml
+python3 odoo/odoo-bin --addons-path=enterprise,odoo/addons,custom_addons -d db-project -u loan_app,loan_borrower,loan_account --dev xml --xmlrpc-port=8000
 
 # Run this will get you an error: don't worry
 odoo/odoo-bin --addons-path=odoo/enterprise,library,odoo/addons -d dbWork -c library.conf --save --stop
