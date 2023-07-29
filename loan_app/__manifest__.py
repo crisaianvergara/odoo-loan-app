@@ -16,9 +16,18 @@
         "views/loan_borrow_views.xml",
         "views/loan_payment_views.xml",
         "report/loan_borrow_reports.xml",
-        "views/website_form.xml",
+        "views/loan_form_template.xml",
     ],
     "demo": [],
+    "assets": {
+        "web.assets_frontend": {
+            "loan_app/static/src/css/portal.css",
+            "loan_app/static/src/js/portal.js",
+        },
+        "web.assets_backend": {
+            
+        }
+    },
     "sequence": -100,
     "application": True,
     "license": "LGPL-3"

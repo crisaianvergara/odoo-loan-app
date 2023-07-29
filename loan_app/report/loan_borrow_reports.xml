@@ -7,7 +7,7 @@
                 <t t-call="web.external_layout">
                     <div class="page">
                         <head>
-                            <link rel="stylesheet" href="/loan_app/static/src/css/style.css"/>
+                            <link rel="stylesheet" href="/loan_app/static/src/css/report.css"/>
                         </head>
                         <h3 class="heading-three" style="color: white;">
                             Loan Details
