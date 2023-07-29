@@ -6,7 +6,7 @@
     "website": "https://www.crisaianvergara.com",
     "category": "Finance/Loan",
     "version": "16.0.1.0.0",
-    "depends": ["base", "loan_borrower", "mail"],
+    "depends": ["base", "mail", "website"],
     "data": [
         "security/security.xml",
         "security/ir.model.access.csv",
@@ -16,6 +16,7 @@
         "views/loan_borrow_views.xml",
         "views/loan_payment_views.xml",
         "report/loan_borrow_reports.xml",
+        "views/website_form.xml",
     ],
     "demo": [],
     "sequence": -100,

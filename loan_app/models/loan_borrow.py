@@ -28,7 +28,7 @@ class LoanBorrow(models.Model):
     _inherit = ["mail.thread", "mail.activity.mixin"]
 
     # Fields
-    borrower_id = fields.Many2one("loan.borrower", string="Name", required=True)
+    borrower_id = fields.Many2one("res.partner", string="Name", required=True)
     loan_plan_id = fields.Many2one("loan.plan", string="Plan (months)", required=True)
     loan_type_id = fields.Many2one("loan.type", string="Type", required=True)
     loan_amount = fields.Float("Amount", required=True, default=LOAN_AMOUNT_MIN)
