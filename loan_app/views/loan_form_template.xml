@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<odoo noupdate="0">
+<odoo noupdate="">
     <!-- Template to check if user is logged in -->
     <template id="is_user_logged_in">
         <t t-if="user_id">
@@ -29,7 +29,9 @@
                                     </div>
                                     <div class="mb-3">
                                         <label for="loan_amount" class="form-label">Amount</label>
-                                        <input name="loan_amount" type="number" class="form-control" id="loan_amount" />
+                                        <input name="loan_amount" type="number" 
+                                            t-att-min="loan_amount_min" t-att-max="loan_amount_max" 
+                                            class="form-control" id="loan_amount" />
                                     </div>
                                     <div class="mb-3">
                                         <label for="loan_plan" class="form-label">Plan (months)</label>

@@ -1,5 +1,6 @@
 from odoo import http
 from odoo.http import request
+from ...loan_app.models.loan_borrow import PROCESSING_FEE, LOAN_AMOUNT_MIN, LOAN_AMOUNT_MAX
 
 
 class LoanForm(http.Controller):
@@ -17,7 +18,10 @@ class LoanForm(http.Controller):
             {
                 'loan_plans': loan_plans,
                 'loan_types': loan_types,
-                'current_user': current_user,  # Pass the current user to the template
+                'current_user': current_user,
+                'processing_fee': PROCESSING_FEE,
+                'loan_amount_min': LOAN_AMOUNT_MIN,
+                'loan_amount_max': LOAN_AMOUNT_MAX,
             }
         )
     
