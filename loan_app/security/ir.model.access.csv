@@ -1,16 +1,16 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_loan_type_user,access.loan.type.user,loan_app.model_loan_type,group_loan_user,1,1,1,0
 access_loan_type_manager,access.loan.type.manager,loan_app.model_loan_type,group_loan_manager,1,1,1,1
-access_loan_type,access.loan.type,loan_app.model_loan_type,base.group_user,1,0,0,0
+access_loan_type,access.loan.type,loan_app.model_loan_type,base.group_portal,1,0,0,0
 
 access_loan_plan_user,access.loan.plan.user,loan_app.model_loan_plan,group_loan_user,1,1,1,0
 access_loan_plan_manager,access.loan.plan.manager,loan_app.model_loan_plan,group_loan_manager,1,1,1,1
-access_loan_plan,access.loan.plan,loan_app.model_loan_plan,base.group_user,1,0,0,0
+access_loan_plan,access.loan.plan,loan_app.model_loan_plan,base.group_portal,1,0,0,0
 
 access_loan_borrow_user,access.loan.borrow.user,loan_app.model_loan_borrow,group_loan_user,1,1,1,0
 access_loan_borrow_manager,access.loan.borrow.manager,loan_app.model_loan_borrow,group_loan_manager,1,1,1,1
-access_loan_borrow,access.loan.borrow,loan_app.model_loan_borrow,base.group_user,1,1,1,0
+access_loan_borrow,access.loan.borrow,loan_app.model_loan_borrow,base.group_portal,1,1,1,0
 
 access_loan_payment_user,access.loan.payment.user,loan_app.model_loan_payment,group_loan_user,1,1,1,0
 access_loan_payment_manager,access.loan.payment.manager,loan_app.model_loan_payment,group_loan_manager,1,1,1,1
-access_loan_payment,access.loan.payment,loan_app.model_loan_payment,base.group_user,1,0,0,0
+access_loan_payment,access.loan.payment,loan_app.model_loan_payment,base.group_portal,1,0,0,0

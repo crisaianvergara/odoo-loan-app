@@ -17,6 +17,10 @@ def get_amount_due(rec):
     total_amount_to_pay = total_interest_in_all_months + rec.loan_amount
     return total_amount_to_pay / int(rec.loan_plan_id.name)
 
+# Loan Email Template
+def send_email_template(self):
+    self.env.ref("loan_email.loan_email_template").send_mail(self.id, force_send=True)
+
 
 class LoanBorrow(models.Model):
     _name = "loan.borrow"
@@ -179,6 +183,7 @@ class LoanBorrow(models.Model):
                         "amount_due": amount_due,
                     }
                 )
+            send_email_template(self)
 
     
     def action_cancel(self):
