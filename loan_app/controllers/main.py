@@ -9,7 +9,7 @@ from ...loan_app.models.loan_borrow import (
 
 
 class LoanForm(http.Controller):
-    @http.route("/loan", type="http", auth="user", website=True)
+    @http.route("/loan/new", type="http", auth="user", website=True)
     def loan_form(self, **kwargs):
         # Fetch loan plans and loan types from the database
         loan_plans = request.env['loan.plan'].sudo().search([])
@@ -30,7 +30,7 @@ class LoanForm(http.Controller):
             }
         )
     
-    @http.route("/submit_loan", type="http", auth="user", website=True, methods=["POST"])
+    @http.route("/loan/submit", type="http", auth="user", website=True, methods=["POST"])
     def submit_loan(self, **kwargs):
         # Retrieve the form data
         loan_amount = float(kwargs.get('loan_amount', 0))
