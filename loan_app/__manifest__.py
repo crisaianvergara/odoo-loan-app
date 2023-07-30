@@ -16,7 +16,10 @@
         "views/loan_borrow_views.xml",
         "views/loan_payment_views.xml",
         "report/loan_borrow_reports.xml",
-        "views/loan_form_template.xml",
+        "views/website_menu.xml",
+        "views/website_loan.xml",
+        "views/website_loan_form.xml",
+        "views/website_payment.xml",
     ],
     "demo": [],
     "assets": {
