@@ -1,6 +1,6 @@
 from odoo import http
 from odoo.http import request
-from ...loan_app.models.loan_borrow import (
+from ..models.loan_borrow import (
     PROCESSING_FEE,
     LOAN_AMOUNT_MIN,
     LOAN_AMOUNT_MAX,
@@ -8,9 +8,39 @@ from ...loan_app.models.loan_borrow import (
 )
 
 
-class LoanForm(http.Controller):
+def check_active_loan():
+    # Check if the user already has loans in draft, submitted, or approved states
+    existing_loan = request.env["loan.borrow"].sudo().search([
+        ("borrower_id", "=", request.env.user.partner_id.id),
+        ("state", "in", ["draft", "submitted", "approved"]),
+    ])
+    return existing_loan
+
+
+class Loan(http.Controller):
+    @http.route("/loan", type="http", auth="user", website=True)
+    def loan(self, **kwargs):
+        # Get the current user
+        current_user = request.env.user.partner_id.id
+
+        # Retrieve only the data of the current user from the loan.borrow
+        loans = request.env["loan.borrow"].sudo().search([("borrower_id", "=", current_user)])
+
+        return request.render(
+            "loan_app.loan",
+            {
+                "loans": loans,
+                "existing_loan": check_active_loan(),
+            }
+        )
+
+
     @http.route("/loan/new", type="http", auth="user", website=True)
-    def loan_form(self, **kwargs):
+    def new_loan(self, **kwargs):
+        # Validate active loan
+        if check_active_loan():
+            return request.redirect("/loan")
+
         # Fetch loan plans and loan types from the database
         loan_plans = request.env['loan.plan'].sudo().search([])
         loan_types = request.env['loan.type'].sudo().search([])
@@ -18,7 +48,7 @@ class LoanForm(http.Controller):
         # Get the current user
         current_user = request.env.user
 
-        return http.request.render(
+        return request.render(
             "loan_app.loan_form", 
             {
                 'loan_plans': loan_plans,
@@ -40,12 +70,6 @@ class LoanForm(http.Controller):
         # Get the current user
         user = request.env.user
 
-        # Print the form data to the console
-        print("Loan Amount:", loan_amount)
-        print("Loan Plan ID:", loan_plan_id)
-        print("Loan Type ID:", loan_type_id)
-        print("User:", user.id)
-
         # Create a new record in the loan.borrow model
         loan_borrow = request.env["loan.borrow"].sudo().create({
             "borrower_id": user.partner_id.id,
@@ -55,5 +79,5 @@ class LoanForm(http.Controller):
             "state": "submitted",
         })
         send_email_submit(request, loan_borrow.id)
-        return http.request.redirect("/")
+        return request.redirect("/")
     

@@ -1,16 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<odoo noupdate="0">
-    <!-- Template to check if user is logged in -->
-    <template id="is_user_logged_in">
-        <t t-if="user_id">
-            <t t-set="logged_in" t-value="True" />
-        </t>
-        <t t-if="not user_id">
-            <t t-set="logged_in" t-value="False" />
-        </t>
-    </template>
-
+<odoo>
     <template id="loan_form" name="Loan Form">
         <t t-call="website.layout">
             <div id="wrap">
@@ -92,10 +82,13 @@
         </t>
     </template>
 
-    <record id="website_menu_loan_form" model="website.menu">
-        <field name="name">Loan</field>
-        <field name="url">/loan/new</field>
-        <field name="parent_id" ref="website.main_menu"/>
-        <field name="sequence">55</field>
-    </record>
+    <!-- Template to check if user is logged in -->
+    <template id="is_user_logged_in">
+        <t t-if="user_id">
+            <t t-set="logged_in" t-value="True" />
+        </t>
+        <t t-if="not user_id">
+            <t t-set="logged_in" t-value="False" />
+        </t>
+    </template>
 </odoo>
