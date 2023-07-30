@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo>
+    <record id="submit_loan_email" model="mail.template">
+        <field name="name">Submit Loan Email</field>
+        <field name="model_id" ref="loan_app.model_loan_borrow" />
+        <field name="subject">Submit Loan Notification</field>
+        <field name="email_from">{{ object.env.user.email }}</field>
+        <field name="email_to">{{ object.borrower_id.email }}</field>
+        <field name="partner_to">{{ object.write_uid.partner_id.id or False }}</field>
+        <field name="body_html" type="html">
+            <p>Dear <span t-field="object.borrower_id.name" />,</p>
+            <p style="margin-left: 1rem;">Your loan application has been submitted.</p>
+            <p>Thank you,</p>
+            <p><span t-field="object.env.user.name" /></p>
+        </field>
+    </record>
+</odoo>

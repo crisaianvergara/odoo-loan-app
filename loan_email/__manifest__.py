@@ -8,7 +8,8 @@
     "version": "16.0.1.0.0",
     "depends": ["loan_app",],
     "data": [
-        "data/loan_email.xml"
+        "data/approve_loan_email.xml",
+        "data/submit_loan_email.xml"
     ],
     "demo": [],
     "assets": {},

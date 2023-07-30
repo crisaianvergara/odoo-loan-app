@@ -11,7 +11,7 @@
         "security/ir.model.access.csv",
         "views/loan_menus.xml",
         "views/loan_borrower_views.xml",
-        "views/website_form.xml",
+        # "views/website_form.xml",
     ],
     "demo": [],
     "sequence": -99,

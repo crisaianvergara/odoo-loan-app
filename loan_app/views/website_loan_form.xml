@@ -1,16 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<odoo noupdate="">
-    <!-- Template to check if user is logged in -->
-    <template id="is_user_logged_in">
-        <t t-if="user_id">
-            <t t-set="logged_in" t-value="True" />
-        </t>
-        <t t-if="not user_id">
-            <t t-set="logged_in" t-value="False" />
-        </t>
-    </template>
-
+<odoo>
     <template id="loan_form" name="Loan Form">
         <t t-call="website.layout">
             <div id="wrap">
@@ -19,7 +9,7 @@
                         <div class="row mt-3 py-3">
                             <div class="col-lg-6 mx-auto">
                                 <h3 class="mb-3">Loan Application</h3>
-                                <form id="loan-form" role="form" action="/submit_loan" method="POST">
+                                <form id="loan-form" role="form" action="/loan/submit" method="POST">
                                     <input type="hidden" name="csrf_token"
                                         t-att-value="request.csrf_token()" />
                                     <div class="mb-3">
@@ -30,8 +20,8 @@
                                     <div class="mb-3">
                                         <label for="loan_amount" class="form-label">Amount</label>
                                         <input name="loan_amount" type="number" 
-                                            t-att-min="loan_amount_min" t-att-max="loan_amount_max" 
-                                            class="form-control" id="loan_amount" />
+                                            t-att-min="loan_amount_min" t-att-max="loan_amount_max"
+                                            t-att-value="loan_amount_min" class="form-control" id="loan_amount" />
                                     </div>
                                     <div class="mb-3">
                                         <label for="loan_plan" class="form-label">Plan (months)</label>
@@ -92,10 +82,13 @@
         </t>
     </template>
 
-    <record id="menu_loan_form" model="website.menu">
-        <field name="name">Loan</field>
-        <field name="url">/loan</field>
-        <field name="parent_id" ref="website.main_menu"/>
-        <field name="sequence">55</field>
-    </record>
+    <!-- Template to check if user is logged in -->
+    <template id="is_user_logged_in">
+        <t t-if="user_id">
+            <t t-set="logged_in" t-value="True" />
+        </t>
+        <t t-if="not user_id">
+            <t t-set="logged_in" t-value="False" />
+        </t>
+    </template>
 </odoo>

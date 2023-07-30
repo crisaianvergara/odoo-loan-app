@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo>
+    <template id="payment" name="Loan Form">
+        <t t-call="website.layout">
+            <div id="wrap">
+                <div class="oe_structure">
+                    <div class="container">
+                        <div class="row mt-3 py-3">
+                            <div class="col-lg-6 mx-auto">
+                                <div class="d-flex justify-content-between mb-3">
+                                    <h3 class="mb-0">Payment Details</h3>
+                                    <a class="btn btn-primary" href="/loan/new">Pay</a>
+                                </div>
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Name</th>
+                                            <th scope="col">Payment Date</th>
+                                            <th scope="col">Amount Due</th>
+                                            <th scope="col">Paid Date</th>
+                                            <th scope="col">Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-if="payments">
+                                            <t t-foreach="payments" t-as="payment">
+                                                <tr>
+                                                    <td><t t-esc="current_user_name" /></td>
+                                                    <td><t t-esc="payment.payment_date" /></td>
+                                                    <td><t t-esc="payment.amount_due" t-options='{"widget": "float", "precision": 2}' /></td>
+                                                    <td><t t-esc="payment.paid_date" /></td>
+                                                    <td><t t-esc="payment.state" /></td>
+                                                </tr>
+                                            </t>
+                                        </t>
+                                        <t t-if="not payments">
+                                            <tr>
+                                                <td class="text-center" colspan="5">No payments found.</td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <!-- Template to check if user is logged in -->
+    <template id="is_user_logged_in">
+        <t t-if="user_id">
+            <t t-set="logged_in" t-value="True" />
+        </t>
+        <t t-if="not user_id">
+            <t t-set="logged_in" t-value="False" />
+        </t>
+    </template>
+</odoo>
