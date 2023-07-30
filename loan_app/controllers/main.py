@@ -1,6 +1,11 @@
 from odoo import http
 from odoo.http import request
-from ...loan_app.models.loan_borrow import PROCESSING_FEE, LOAN_AMOUNT_MIN, LOAN_AMOUNT_MAX
+from ...loan_app.models.loan_borrow import (
+    PROCESSING_FEE,
+    LOAN_AMOUNT_MIN,
+    LOAN_AMOUNT_MAX,
+    send_email_submit
+)
 
 
 class LoanForm(http.Controller):
@@ -26,11 +31,11 @@ class LoanForm(http.Controller):
         )
     
     @http.route("/submit_loan", type="http", auth="user", website=True, methods=["POST"])
-    def submit_loan(self, **post):
+    def submit_loan(self, **kwargs):
         # Retrieve the form data
-        loan_amount = float(post.get('loan_amount', 0))
-        loan_plan_id = int(post.get('loan_plan', 0))
-        loan_type_id = int(post.get('loan_type', 0))
+        loan_amount = float(kwargs.get('loan_amount', 0))
+        loan_plan_id = int(kwargs.get('loan_plan', 0))
+        loan_type_id = int(kwargs.get('loan_type', 0))
 
         # Get the current user
         user = request.env.user
@@ -49,6 +54,6 @@ class LoanForm(http.Controller):
             "loan_amount": loan_amount,
             "state": "submitted",
         })
-
+        send_email_submit(request, loan_borrow.id)
         return http.request.redirect("/")
     
